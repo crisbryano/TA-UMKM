@@ -1,0 +1,179 @@
+/* Custom CSS for Martabak MSME Website */
+
+/* Global Styles */
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    color: #000;
+    background-color: #fff;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+}
+
+/* Buttons */
+.btn-dark {
+    background-color: #000;
+    border-color: #000;
+    border-radius: 0;
+    padding: 10px 20px;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+.btn-dark:hover {
+    background-color: #333;
+    border-color: #333;
+}
+
+.btn-outline-dark {
+    color: #000;
+    border-color: #000;
+    border-radius: 0;
+    padding: 10px 20px;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-dark:hover {
+    background-color: #000;
+    color: #fff;
+}
+
+/* Navbar */
+.navbar {
+    padding: 15px 0;
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+}
+
+.nav-link {
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem !important;
+}
+
+/* Cards */
+.card {
+    border-radius: 0;
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+}
+
+.card-img-top {
+    border-radius: 0;
+}
+
+/* Product Cards */
+.product-card {
+    margin-bottom: 30px;
+}
+
+.product-card .card-title {
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+.product-card .price {
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+/* Forms */
+.form-control {
+    border-radius: 0;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+}
+
+.form-control:focus {
+    box-shadow: none;
+    border-color: #000;
+}
+
+/* Footer */
+footer a {
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+footer a:hover {
+    opacity: 0.8;
+    text-decoration: underline;
+}
+
+/* Cart Badge */
+.badge {
+    position: relative;
+    top: -10px;
+    left: -5px;
+}
+
+/* Product Detail */
+.product-detail-img {
+    max-height: 400px;
+    object-fit: cover;
+}
+
+/* Order Status */
+.status-badge {
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.status-pending {
+    background-color: #f8f9fa;
+    color: #6c757d;
+}
+
+.status-processing {
+    background-color: #cff4fc;
+    color: #055160;
+}
+
+.status-shipped {
+    background-color: #fff3cd;
+    color: #664d03;
+}
+
+.status-delivered {
+    background-color: #d1e7dd;
+    color: #0f5132;
+}
+
+.status-cancelled {
+    background-color: #f8d7da;
+    color: #842029;
+}
+
+/* Dashboard */
+.dashboard-card {
+    border-left: 4px solid #000;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .navbar-brand {
+        font-size: 1.2rem;
+    }
+    
+    .product-detail-img {
+        max-height: 300px;
+    }
+}

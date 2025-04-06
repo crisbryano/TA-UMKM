@@ -1,0 +1,130 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}Order Status Update{% endblock %}
+
+{% block extra_css %}
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+    .email-container {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #ffffff;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        padding: 20px;
+    }
+    .email-header {
+        text-align: center;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #eee;
+        margin-bottom: 20px;
+    }
+    .email-footer {
+        text-align: center;
+        padding-top: 20px;
+        border-top: 1px solid #eee;
+        margin-top: 20px;
+        color: #6c757d;
+        font-size: 0.9rem;
+    }
+    .status-badge {
+        display: inline-block;
+        padding: 0.25em 0.6em;
+        font-size: 0.75em;
+        font-weight: 700;
+        line-height: 1;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: baseline;
+        border-radius: 0.25rem;
+        color: #fff;
+    }
+    .status-pending {
+        background-color: #6c757d;
+    }
+    .status-processing {
+        background-color: #17a2b8;
+    }
+    .status-shipped {
+        background-color: #007bff;
+    }
+    .status-delivered {
+        background-color: #28a745;
+    }
+    .status-cancelled {
+        background-color: #dc3545;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="email-container">
+    <div class="email-header">
+        <h2>Order Status Update</h2>
+        <p>Your order status has been updated</p>
+    </div>
+    
+    <p>Dear {{ order.full_name }},</p>
+    
+    <p>We're writing to inform you that the status of your order has been updated to: 
+        <span class="status-badge status-{{ order.status }}">{{ status }}</span>
+    </p>
+    
+    <div class="card mb-4">
+        <div class="card-header bg-light">
+            <h5 class="mb-0">Order #{{ order.id }}</h5>
+            <small>Placed on {{ order.created_at|date:"F d, Y" }}</small>
+        </div>
+        <div class="card-body">
+            <table class="table table-borderless">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in items %}
+                    <tr>
+                        <td>{{ item.product.name }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>Rp {{ item.price }}</td>
+                        <td>Rp {{ item.get_total }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3" class="text-end fw-bold">Subtotal:</td>
+                        <td>Rp {{ order.total_amount|floatformat:2 }}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="text-end fw-bold">Shipping:</td>
+                        <td>Rp 10000.00</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="text-end fw-bold">Total:</td>
+                        <td class="fw-bold">Rp {{ order.total_amount|add:10000|floatformat:2 }}</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    
+    <p>You can track your order status by logging into your account on our website.</p>
+    
+    <p>If you have any questions or concerns about your order, please don't hesitate to contact us.</p>
+    
+    <p>Thank you for shopping with Martabak MSME!</p>
+    
+    <div class="email-footer">
+        <p>© {% now "Y" %} Martabak MSME. All rights reserved.</p>
+        <p>123 Martabak Street, Jakarta, Indonesia</p>
+    </div>
+</div>
+{% endblock %}

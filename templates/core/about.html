@@ -1,0 +1,67 @@
+{% extends 'core/base.html' %}
+
+{% block title %}About - Martabak MSME{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <h1 class="mb-4 text-center">About Us</h1>
+            <div class="card border-0 shadow-sm mb-5">
+                <div class="card-body p-5">
+                    <h2 class="mb-4">Our Story</h2>
+                    <p>Welcome to Martabak MSME, where tradition meets innovation in every bite of our authentic Indonesian martabak.</p>
+                    
+                    <p>Founded in 2020, our small family business has grown from a humble street cart to a beloved local brand. We take pride in preserving the authentic flavors of traditional martabak while adding our own unique touch to each recipe.</p>
+                    
+                    <p>Our commitment to quality means we use only the freshest ingredients, sourced locally whenever possible. Each martabak is made to order, ensuring you receive the perfect texture and flavor every time.</p>
+                    
+                    <h3 class="mt-5 mb-3">Our Specialties</h3>
+                    
+                    <div class="row mb-4">
+                        <div class="col-md-4 mb-3">
+                            <div class="card h-100 border-0 shadow-sm">
+                                <div class="card-body text-center">
+                                    <h4>Martabak Telur</h4>
+                                    <p>Savory egg martabak filled with minced meat, green onions, and our secret blend of spices.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="card h-100 border-0 shadow-sm">
+                                <div class="card-body text-center">
+                                    <h4>Martabak Manis</h4>
+                                    <p>Sweet martabak with various toppings including chocolate, cheese, peanuts, and condensed milk.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="card h-100 border-0 shadow-sm">
+                                <div class="card-body text-center">
+                                    <h4>Martabak Tipis Kering</h4>
+                                    <p>Thin and crispy martabak with a perfect balance of savory flavors and crispy texture.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h3 class="mt-5 mb-3">Our Values</h3>
+                    <ul>
+                        <li><strong>Quality:</strong> We never compromise on the quality of our ingredients or preparation methods.</li>
+                        <li><strong>Authenticity:</strong> We stay true to traditional recipes while adding our own creative touch.</li>
+                        <li><strong>Community:</strong> We believe in building relationships with our customers and supporting local suppliers.</li>
+                        <li><strong>Innovation:</strong> We continuously explore new flavors and techniques to enhance your martabak experience.</li>
+                    </ul>
+                    
+                    <p class="mt-5">Thank you for choosing Martabak MSME. We look forward to serving you the best martabak in town!</p>
+                </div>
+            </div>
+            
+            <div class="text-center">
+                <a href="{% url 'product_list' %}" class="btn btn-dark">Explore Our Products</a>
+                <a href="{% url 'contact' %}" class="btn btn-outline-dark ms-2">Contact Us</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

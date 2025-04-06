@@ -1,0 +1,51 @@
+{% extends 'core/base.html' %}
+
+{% block title %}{{ product.name }} - Martabak MSME{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-lg-10 mx-auto">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'home' %}" class="text-dark">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'product_list' %}" class="text-dark">Products</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'product_list_by_category' product.category.slug %}" class="text-dark">{{ product.category.name }}</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ product.name }}</li>
+                </ol>
+            </nav>
+            
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <div class="row">
+                        <div class="col-md-6 mb-4 mb-md-0">
+                            <img src="{{ product.image.url }}" class="img-fluid product-detail-img" alt="{{ product.name }}" onerror="this.src='https://via.placeholder.com/600x400?text={{ product.name }}'">
+                        </div>
+                        <div class="col-md-6">
+                            <h1 class="mb-3">{{ product.name }}</h1>
+                            <p class="price fs-3 fw-bold mb-3">Rp {{ product.price }}</p>
+                            
+                            <div class="mb-4">
+                                <span class="badge {% if product.stock > 10 %}bg-success{% elif product.stock > 0 %}bg-warning text-dark{% else %}bg-danger{% endif %}">
+                                    {% if product.stock > 10 %}In Stock{% elif product.stock > 0 %}Low Stock ({{ product.stock }} left){% else %}Out of Stock{% endif %}
+                                </span>
+                            </div>
+                            
+                            <div class="mb-4">
+                                {{ product.description|linebreaks }}
+                            </div>
+                            
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-dark btn-lg" {% if product.stock <= 0 %}disabled{% endif %} onclick="addToCart({{ product.id }}, '{{ product.name }}', {{ product.price }}, '{{ product.image.url }}')">
+                                    Add to Cart
+                                </button>
+                                <a href="{% url 'product_list' %}" class="btn btn-outline-dark">Continue Shopping</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

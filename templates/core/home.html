@@ -1,0 +1,122 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}Home - Martabak MSME{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="bg-dark text-white py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="display-4 fw-bold mb-4">Authentic Martabak</h1>
+                <p class="lead mb-4">Experience the rich flavors of our traditional martabak, made with the finest ingredients and authentic recipes.</p>
+                <a href="{% url 'product_list' %}" class="btn btn-light btn-lg">Shop Now</a>
+            </div>
+            <div class="col-lg-6">
+                <img src="{% static 'images/hero-martabak.jpg' %}" alt="Martabak" class="img-fluid rounded" onerror="this.src='https://via.placeholder.com/600x400?text=Martabak'">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Products -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">Featured Products</h2>
+        <div class="row">
+            {% for product in featured_products %}
+            <div class="col-md-4">
+                <div class="card product-card border-0 shadow-sm h-100">
+                    <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" onerror="this.src='https://via.placeholder.com/300x200?text={{ product.name }}'">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="card-text price">Rp {{ product.price }}</p>
+                        <a href="{% url 'product_detail' product.slug %}" class="btn btn-outline-dark">View Details</a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center">
+                <p>No featured products available.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <img src="{% static 'images/about-martabak.jpg' %}" alt="About Martabak" class="img-fluid rounded" onerror="this.src='https://via.placeholder.com/600x400?text=About+Martabak'">
+            </div>
+            <div class="col-lg-6">
+                <h2 class="mb-4">Our Story</h2>
+                <p class="mb-4">We started our martabak journey with a simple goal: to create the most delicious martabak in town. Using traditional recipes passed down through generations, we've perfected our craft to bring you authentic flavors.</p>
+                <p>Our menu features three signature martabak varieties:</p>
+                <ul>
+                    <li><strong>Martabak Telur</strong> - Savory egg martabak with minced meat and spices</li>
+                    <li><strong>Martabak Manis</strong> - Sweet martabak with various toppings</li>
+                    <li><strong>Martabak Tipis Kering</strong> - Thin and crispy martabak</li>
+                </ul>
+                <a href="{% url 'about' %}" class="btn btn-dark mt-3">Learn More</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">What Our Customers Say</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                        </div>
+                        <p class="card-text">"The best martabak telur I've ever tasted! The filling is generous and the flavors are perfectly balanced."</p>
+                        <p class="card-text"><small class="text-muted">- Budi S.</small></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                        </div>
+                        <p class="card-text">"Martabak Manis with chocolate and cheese is my favorite! Always fresh and delicious. Fast delivery too!"</p>
+                        <p class="card-text"><small class="text-muted">- Siti R.</small></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                        </div>
+                        <p class="card-text">"Martabak Tipis Kering is so crispy and flavorful! Perfect for sharing with friends during movie night."</p>
+                        <p class="card-text"><small class="text-muted">- Dewi A.</small></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,106 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Dashboard - Orders - Martabak MSME{% endblock %}
+
+{% block content %}
+<div class="container-fluid my-5">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-lg-2 mb-4">
+            <div class="list-group">
+                <a href="{% url 'dashboard' %}" class="list-group-item list-group-item-action">
+                    <i class="bi bi-speedometer2 me-2"></i> Dashboard
+                </a>
+                <a href="{% url 'dashboard_orders' %}" class="list-group-item list-group-item-action active">
+                    <i class="bi bi-cart me-2"></i> Orders
+                </a>
+                <a href="{% url 'dashboard_products' %}" class="list-group-item list-group-item-action">
+                    <i class="bi bi-box me-2"></i> Products
+                </a>
+                <a href="{% url 'customer_list' %}" class="list-group-item list-group-item-action">
+                    <i class="bi bi-people me-2"></i> Customers
+                </a>
+                <a href="{% url 'sales_data' %}" class="list-group-item list-group-item-action">
+                    <i class="bi bi-graph-up me-2"></i> Sales Data
+                </a>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="col-lg-10">
+            <h1 class="mb-4">Orders</h1>
+            
+            <!-- Filters -->
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-body">
+                    <form method="get" class="row g-3">
+                        <div class="col-md-3">
+                            <label for="status" class="form-label">Status</label>
+                            <select class="form-select" id="status" name="status">
+                                <option value="">All Statuses</option>
+                                {% for status_code, status_name in status_choices %}
+                                <option value="{{ status_code }}" {% if selected_status == status_code %}selected{% endif %}>{{ status_name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="date_from" class="form-label">Date From</label>
+                            <input type="date" class="form-control" id="date_from" name="date_from" value="{{ date_from|date:'Y-m-d' }}">
+                        </div>
+                        <div class="col-md-3">
+                            <label for="date_to" class="form-label">Date To</label>
+                            <input type="date" class="form-control" id="date_to" name="date_to" value="{{ date_to|date:'Y-m-d' }}">
+                        </div>
+                        <div class="col-md-3 d-flex align-items-end">
+                            <button type="submit" class="btn btn-dark me-2">Filter</button>
+                            <a href="{% url 'dashboard_orders' %}" class="btn btn-outline-dark">Reset</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Orders Table -->
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Customer</th>
+                                    <th>Date</th>
+                                    <th>Total</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for order in orders %}
+                                <tr>
+                                    <td>#{{ order.id }}</td>
+                                    <td>{{ order.full_name }}</td>
+                                    <td>{{ order.created_at|date:"M d, Y" }}</td>
+                                    <td>Rp {{ order.total_amount|floatformat:2 }}</td>
+                                    <td>
+                                        <span class="status-badge status-{{ order.status }}">
+                                            {{ order.get_status_display }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'dashboard_order_detail' order.id %}" class="btn btn-sm btn-outline-dark">View</a>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="6" class="text-center">No orders found.</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

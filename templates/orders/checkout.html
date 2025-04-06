@@ -1,0 +1,203 @@
+{% extends 'core/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Checkout - Martabak MSME{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="mb-4">Checkout</h1>
+    
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-body p-4">
+                    <h5 class="card-title mb-4">Shipping Information</h5>
+                    <form method="post" action="{% url 'place_order' %}" id="checkout-form">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="full_name" class="form-label">Full Name</label>
+                                <input type="text" class="form-control" id="full_name" name="full_name" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">Phone Number</label>
+                            <input type="tel" class="form-control" id="phone" name="phone" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="address" class="form-label">Address</label>
+                            <textarea class="form-control" id="address" name="address" rows="3" required></textarea>
+                        </div>
+                        
+                        <h5 class="card-title mb-4 mt-5">Payment Method</h5>
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="payment_method" id="payment_cash" value="cash" checked>
+                                <label class="form-check-label" for="payment_cash">
+                                    Cash on Delivery
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="payment_method" id="payment_transfer" value="transfer">
+                                <label class="form-check-label" for="payment_transfer">
+                                    Bank Transfer
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div id="bank_details" class="mb-3 d-none">
+                            <div class="alert alert-info">
+                                <p class="mb-1"><strong>Bank: </strong> Bank Central Asia (BCA)</p>
+                                <p class="mb-1"><strong>Account Number: </strong> 1234567890</p>
+                                <p class="mb-1"><strong>Account Name: </strong> Martabak MSME</p>
+                                <p class="mb-0">Please transfer the exact amount and include your order number in the transfer description.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="d-grid gap-2 mt-4">
+                            <button type="submit" class="btn btn-dark btn-lg">Place Order</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-body p-4">
+                    <h5 class="card-title mb-3">Order Summary</h5>
+                    <div id="checkout-items">
+                        <!-- Order items will be loaded here via JavaScript -->
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Subtotal:</span>
+                        <span id="checkout-subtotal">Rp 0</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Shipping:</span>
+                        <span>Rp 10000</span>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between mb-3">
+                        <span class="fw-bold">Total:</span>
+                        <span class="fw-bold" id="checkout-total">Rp 0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block extra_js %}
+<script>
+    $(document).ready(function() {
+        // Load order items
+        loadOrderItems();
+        
+        // Toggle bank details based on payment method
+        $('input[name="payment_method"]').change(function() {
+            if ($(this).val() === 'transfer') {
+                $('#bank_details').removeClass('d-none');
+            } else {
+                $('#bank_details').addClass('d-none');
+            }
+        });
+        
+        // Client-side form validation
+        $('#checkout-form').submit(function(event) {
+            let isValid = true;
+            
+            // Validate full name
+            const fullName = $('#full_name').val().trim();
+            if (fullName === '') {
+                isValid = false;
+                $('#full_name').addClass('is-invalid');
+            } else {
+                $('#full_name').removeClass('is-invalid');
+            }
+            
+            // Validate email
+            const email = $('#email').val().trim();
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                isValid = false;
+                $('#email').addClass('is-invalid');
+            } else {
+                $('#email').removeClass('is-invalid');
+            }
+            
+            // Validate phone
+            const phone = $('#phone').val().trim();
+            if (phone === '' || phone.length < 10) {
+                isValid = false;
+                $('#phone').addClass('is-invalid');
+            } else {
+                $('#phone').removeClass('is-invalid');
+            }
+            
+            // Validate address
+            const address = $('#address').val().trim();
+            if (address === '') {
+                isValid = false;
+                $('#address').addClass('is-invalid');
+            } else {
+                $('#address').removeClass('is-invalid');
+            }
+            
+            if (!isValid) {
+                event.preventDefault();
+            }
+        });
+        
+        // Function to load order items
+        function loadOrderItems() {
+            const cart = window.getCartItems();
+            const checkoutItemsContainer = $('#checkout-items');
+            checkoutItemsContainer.empty();
+            
+            if (Object.keys(cart).length === 0) {
+                window.location.href = "{% url 'cart' %}";
+                return;
+            }
+            
+            let itemsHtml = '';
+            
+            for (const id in cart) {
+                const item = cart[id];
+                const itemTotal = item.price * item.quantity;
+                
+                itemsHtml += `
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div>
+                            <h6 class="mb-0">${item.name}</h6>
+                            <small class="text-muted">Quantity: ${item.quantity}</small>
+                        </div>
+                        <span>Rp ${itemTotal}</span>
+                    </div>
+                `;
+            }
+            
+            checkoutItemsContainer.html(itemsHtml);
+            
+            // Update totals
+            updateOrderTotals();
+        }
+        
+        // Function to update order totals
+        function updateOrderTotals() {
+            const subtotal = parseFloat(window.getCartTotal());
+            const shipping = 10000;
+            const total = subtotal + shipping;
+            
+            $('#checkout-subtotal').text(`Rp ${subtotal}`);
+            $('#checkout-total').text(`Rp ${total}`);
+        }
+    });
+</script>
+{% endblock %}
+{% endblock %}
