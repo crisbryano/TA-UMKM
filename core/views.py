@@ -3,10 +3,22 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib import messages
 from .models import UserProfile, Settings
+from products.models import Product, Category
 
 def home(request):
+    try:
+        top_picks_category = Category.objects.get(name="Top Picks")
+        featured_products = Product.objects.filter(category=top_picks_category)
+    except Category.DoesNotExist:
+        featured_products = Product.objects.none()
+    
+    # Add any other context data your dashboard needs
+    context = {
+        'featured_products': featured_products,
+    }
     settings = Settings.get_settings()
-    return render(request, 'core/home.html', {'settings': settings})
+    
+    return render(request, 'core/home.html', {**context, 'settings': settings})
 
 def about(request):
     settings = Settings.get_settings()

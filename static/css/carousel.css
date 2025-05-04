@@ -1,0 +1,116 @@
+/* CSS untuk martabak carousel full width dengan nama class unik */
+
+/* Memperbaiki container carousel */
+.martabak-carousel-container {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+  }
+  
+  #martabakCarousel {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Meningkatkan tinggi carousel */
+  .martabak-carousel-item {
+    height: 80vh; /* Tinggi 80% dari viewport height */
+    min-height: 500px; /* Tinggi minimum */
+    position: relative;
+    width: 100%;
+  }
+  
+  /* Mengatur gambar latar belakang */
+  .martabak-carousel-item {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  
+  /* Overlay untuk text */
+  .martabak-carousel-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4); /* Sedikit gelap untuk keterbacaan teks */
+    display: flex;
+    align-items: center;
+  }
+  
+  /* Container teks */
+  .martabak-text-container {
+    color: white;
+    padding: 2rem 6rem;
+    max-width: 60%;
+    margin-left: 8%;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+  }
+  
+  .martabak-text-container h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+  }
+  
+  .martabak-text-container p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .martabak-btn-container {
+    margin-top: 2rem;
+  }
+  
+  .martabak-btn-container .btn {
+    padding: 0.75rem 1.5rem;
+    font-size: 1.1rem;
+    margin-right: 1rem;
+    border-radius: 4px;
+    font-weight: 500;
+  }
+  
+  /* Untuk tampilan responsive */
+  @media (max-width: 768px) {
+    .martabak-text-container {
+      max-width: 85%;
+      padding: 1.5rem;
+      margin-left: 5%;
+    }
+    
+    .martabak-text-container h1 {
+      font-size: 2rem;
+    }
+    
+    .martabak-text-container p {
+      font-size: 1rem;
+    }
+    
+    .martabak-btn-container .btn {
+      padding: 0.5rem 1rem;
+      font-size: 0.9rem;
+    }
+  }
+  
+  /* Indikator Carousel */
+  .martabak-carousel-indicators {
+    margin-bottom: 2rem;
+  }
+  
+  .martabak-carousel-indicators button {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin: 0 5px;
+  }
+  
+  /* Pastikan carousel memenuhi lebar layar */
+  .martabak-carousel-wrapper {
+    padding: 0;
+    overflow-x: hidden;
+    width: 100%;
+  }

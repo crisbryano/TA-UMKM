@@ -1,13 +1,13 @@
+# orders/models.py
 from django.db import models
 from django.contrib.auth.models import User
 from products.models import Product
 
 class Order(models.Model):
     STATUS_CHOICES = (
-        ('pending', 'Pending'),
-        ('processing', 'Processing'),
-        ('shipped', 'Shipped'),
-        ('delivered', 'Delivered'),
+        ('pending', 'Pesanan Dibuat'),
+        ('processing', 'Proses Pembuatan'),
+        ('delivered', 'Siap Diambil'),
         ('cancelled', 'Cancelled'),
     )
     

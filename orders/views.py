@@ -1,3 +1,4 @@
+# orders/views.py
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, JsonResponse
@@ -10,7 +11,8 @@ from django.utils.html import strip_tags
 from products.models import Product
 from .models import Order, OrderItem
 import json
-import datetime
+import datetime 
+import urllib
 
 def cart_view(request):
     """View for displaying the shopping cart page"""
@@ -101,9 +103,9 @@ def place_order(request):
             cart_items = json.loads(cart_items)
         else:
             # Fallback to cookie if hidden field is not available
-            cart_cookie = request.COOKIES.get('cart')
-            cart_items = json.loads(cart_cookie) if cart_cookie else {}
-        
+            cart_cookie = request.COOKIES.get('cart', '{}')
+            cart_cookie = urllib.parse.unquote(cart_cookie) if cart_cookie else '{}'
+            cart_items = json.loads(cart_cookie)
         if not cart_items:
             messages.error(request, 'Your cart is empty')
             return redirect('cart')

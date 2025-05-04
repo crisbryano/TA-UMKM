@@ -1,3 +1,4 @@
+# dashboard/models.py
 from django.db import models
 
 class SalesData(models.Model):

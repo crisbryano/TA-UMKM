@@ -1,54 +1,121 @@
 {% extends 'core/base.html' %}
 
-{% block title %}Products - Martabak MSME{% endblock %}
+{% block title %}Products - Martabak Pandan Wangi{% endblock %}
+{% block extra_css %}
+<style>
+    .sticky-sidebar {
+        position: sticky;
+        top: 20px; /* Adjust this value based on your header height */
+        max-height: calc(100vh - 40px); /* Adjust to ensure it doesn't overlap footer */
+        overflow-y: auto; /* In case the sidebar is taller than viewport */
+    }
+    
+    /* Hide scrollbar but allow scrolling if needed */
+    .sticky-sidebar::-webkit-scrollbar {
+        width: 0px;
+    }
+    
+    /* Optional: Add some padding at bottom to ensure visibility of all content */
+    .sticky-sidebar {
+        padding-bottom: 20px;
+    }
+</style>
+{% endblock %}
 
 {% block content %}
-<div class="container my-5">
+<!-- Order Procedure Modal -->
+<div class="modal fade" id="orderProcedureModal" tabindex="-1" aria-labelledby="orderProcedureModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header bg-success text-white">
+          <h5 class="modal-title" id="orderProcedureModalLabel">Cara Pemesanan Martabak Pandan Wangi</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="text-center mb-3">
+            <img src="/static/images/logo.png" alt="Martabak Pandan Wangi Logo" class="img-fluid mb-3" style="max-height: 100px;">
+          </div>
+          
+          <p class="text-danger bg-danger bg-opacity-25 p-2">Pemesanan hanya dapat dilakukan untuk take away, jika ingin delivery bisa lewat e-commerce yang kami cantumkan di laman utama <a href="{% url 'home' %}#ecomerce">E-Commerce</a></p>
+
+          <h6 class="fw-bold">Prosedur Pemesanan:</h6>
+          <ol class="mb-4">
+            
+            <li>Pilih produk yang ingin dipesan</li>
+            <li>Klik tombol keranjang untuk menambahkan produk yang ingin anda beli</li>
+            <li>Buka keranjang belanja untuk melihat pesanan Anda</li>
+            <li>Atur jumlah pesanan sesuai kebutuhan</li>
+            <li>Klik "Checkout" dan isi data formulir</li>
+            <li>Pilih metode pembayaran yang tersedia</li>
+            <li>Bayar dan selesaikan pemesanan</li>
+            <li>Admin akan mengonfirmasi pesanan Anda</li>
+            <li>Kami akan menghubungi anda saat pesanan anda selesai</li>
+          </ol>
+          
+          <div class="alert alert-info">
+            <strong>Perhatian:</strong> Untuk pemesanan dalam jumlah besar maksimal h-2, hubungi kami di 081312323
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" data-bs-dismiss="modal">Mengerti</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container my-5">
     <div class="row">
-        <!-- Category Sidebar -->
+        <!-- Category Sidebar with position-sticky -->
         <div class="col-lg-3 mb-4">
-            <div class="card border-0 shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title mb-3">Categories</h5>
-                    <div class="list-group list-group-flush">
-                        <a href="{% url 'product_list' %}" class="list-group-item list-group-item-action {% if not category %}fw-bold{% endif %}">
-                            All Products
-                        </a>
-                        {% for c in categories %}
-                        <a href="{% url 'product_list_by_category' c.slug %}" class="list-group-item list-group-item-action {% if category.id == c.id %}fw-bold{% endif %}">
-                            {{ c.name }}
-                        </a>
-                        {% endfor %}
+            <div class="sticky-sidebar" style="position: sticky; top: 20px;">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3">Categories</h5>
+                        <div class="list-group list-group-flush">
+                            <a href="{% url 'product_list' %}"
+                                class="list-group-item list-group-item-action {% if not category %}fw-bold{% endif %}">
+                                All Products
+                            </a>
+                            {% for c in categories %}
+                            <a href="{% url 'product_list_by_category' c.slug %}"
+                                class="list-group-item list-group-item-action {% if category.id == c.id %}fw-bold{% endif %}">
+                                {{ c.name }}
+                            </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card border-0 shadow-sm mt-4">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3">Filter by Price</h5>
+                        <form method="get" action="{% url 'product_list' %}">
+                            <div class="mb-3">
+                                <label for="min_price" class="form-label">Min Price</label>
+                                <input type="number" class="form-control" id="min_price" name="min_price" min="0"
+                                    value="{{ request.GET.min_price|default:'' }}">
+                            </div>
+                            <div class="mb-3">
+                                <label for="max_price" class="form-label">Max Price</label>
+                                <input type="number" class="form-control" id="max_price" name="max_price" min="0"
+                                    value="{{ request.GET.max_price|default:'' }}">
+                            </div>
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-dark">Apply Filter</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
-            
-            <div class="card border-0 shadow-sm mt-4">
-                <div class="card-body">
-                    <h5 class="card-title mb-3">Filter by Price</h5>
-                    <form method="get" action="{% url 'product_list' %}">
-                        <div class="mb-3">
-                            <label for="min_price" class="form-label">Min Price</label>
-                            <input type="number" class="form-control" id="min_price" name="min_price" min="0" value="{{ request.GET.min_price|default:'' }}">
-                        </div>
-                        <div class="mb-3">
-                            <label for="max_price" class="form-label">Max Price</label>
-                            <input type="number" class="form-control" id="max_price" name="max_price" min="0" value="{{ request.GET.max_price|default:'' }}">
-                        </div>
-                        <div class="d-grid">
-                            <button type="submit" class="btn btn-dark">Apply Filter</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
         </div>
-        
+
         <!-- Product Listing -->
         <div class="col-lg-9">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h1 class="mb-0">{% if category %}{{ category.name }}{% else %}All Products{% endif %}</h1>
                 <div class="dropdown">
-                    <button class="btn btn-outline-dark dropdown-toggle" type="button" id="sortDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button class="btn btn-outline-dark dropdown-toggle" type="button" id="sortDropdown"
+                        data-bs-toggle="dropdown" aria-expanded="false">
                         Sort By
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="sortDropdown">
@@ -59,21 +126,27 @@
                     </ul>
                 </div>
             </div>
-            
+
             <div class="row">
                 {% for product in products %}
                 <div class="col-md-4 mb-4">
                     <div class="card product-card border-0 shadow-sm h-100">
-                        <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" onerror="this.src='https://via.placeholder.com/300x200?text={{ product.name }}'">
+                        <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}"
+                            onerror="this.src='https://via.placeholder.com/300x200?text={{ product.name }}'">
                         <div class="card-body">
                             <h5 class="card-title">{{ product.name }}</h5>
                             <p class="card-text price">Rp {{ product.price }}</p>
                             <div class="d-flex justify-content-between align-items-center">
-                                <a href="{% url 'product_detail' product.slug %}" class="btn btn-outline-dark">View Details</a>
-                                <button class="btn btn-dark" onclick="addToCart({{ product.id }}, '{{ product.name }}', {{ product.price }}, '{{ product.image.url }}')">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-plus" viewBox="0 0 16 16">
-                                        <path d="M9 5.5a.5.5 0 0 0-1 0V7H6.5a.5.5 0 0 0 0 1H8v1.5a.5.5 0 0 0 1 0V8h1.5a.5.5 0 0 0 0-1H9V5.5z"/>
-                                        <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                                <a href="{% url 'product_detail' product.slug %}" class="btn btn-outline-dark">View
+                                    Details</a>
+                                <button class="btn btn-dark"
+                                    onclick="addToCart({{ product.id }}, '{{ product.name }}', {{ product.price }}, '{{ product.image.url }}')">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-cart-plus" viewBox="0 0 16 16">
+                                        <path
+                                            d="M9 5.5a.5.5 0 0 0-1 0V7H6.5a.5.5 0 0 0 0 1H8v1.5a.5.5 0 0 0 1 0V8h1.5a.5.5 0 0 0 0-1H9V5.5z" />
+                                        <path
+                                            d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
                                     </svg>
                                 </button>
                             </div>
@@ -92,3 +165,13 @@
     </div>
 </div>
 {% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    // Always show the modal when the page loads
+    var orderModal = new bootstrap.Modal(document.getElementById('orderProcedureModal'));
+    orderModal.show();
+});
+</script>
+    {% endblock %}

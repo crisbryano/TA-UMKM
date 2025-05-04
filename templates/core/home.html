@@ -1,122 +1,393 @@
+<!-- home.html -->
 {% extends 'core/base.html' %}
 {% load static %}
-{% block title %}Home - Martabak MSME{% endblock %}
+{% block title %}Home - Martabak Pandan Wangi{% endblock %}
 
 {% block content %}
-<!-- Hero Section -->
-<section class="bg-dark text-white py-5">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-6">
-                <h1 class="display-4 fw-bold mb-4">Authentic Martabak</h1>
-                <p class="lead mb-4">Experience the rich flavors of our traditional martabak, made with the finest ingredients and authentic recipes.</p>
-                <a href="{% url 'product_list' %}" class="btn btn-light btn-lg">Shop Now</a>
-            </div>
-            <div class="col-lg-6">
-                <img src="{% static 'images/hero-martabak.jpg' %}" alt="Martabak" class="img-fluid rounded" onerror="this.src='https://via.placeholder.com/600x400?text=Martabak'">
-            </div>
-        </div>
+<section class="bg-black text-white">
+    <!-- Tambahkan class martabak-carousel-wrapper pada parent element -->
+<div class="martabak-carousel-wrapper">
+    <div id="martabakCarousel" class="carousel slide" data-bs-ride="carousel">
+      
+      
+      <div class="carousel-inner" id="martabak-carousel-inner">
+        <!-- Carousel items will be generated here by JavaScript -->
+        <div class="martabak-carousel-indicators" id="martabak-carousel-indicators">
+            <!-- Indicators will be generated here by JavaScript -->
+          </div>
+      </div>
+      
+      <!-- Navigasi Carousel -->
+      <button class="carousel-control-prev" type="button" data-bs-target="#martabakCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#martabakCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
     </div>
-</section>
+  </div>
+</section> 
 
 <!-- Featured Products -->
-<section class="py-5">
+<section class="py-5 bg-light">
     <div class="container">
-        <h2 class="text-center mb-5">Featured Products</h2>
-        <div class="row">
+        <h2 class="text-center mb-4 fw-bold">Produk Unggulan</h2>
+        <div class="row g-4 justify-content-center">
             {% for product in featured_products %}
-            <div class="col-md-4">
-                <div class="card product-card border-0 shadow-sm h-100">
-                    <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" onerror="this.src='https://via.placeholder.com/300x200?text={{ product.name }}'">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ product.name }}</h5>
-                        <p class="card-text price">Rp {{ product.price }}</p>
-                        <a href="{% url 'product_detail' product.slug %}" class="btn btn-outline-dark">View Details</a>
+            <div class="col-md-4 mb-4">
+                <div class="card product-card h-100 border-0 rounded-3 overflow-hidden shadow-sm hover-shadow">
+                    <!-- Card image with overlay effect -->
+                    <div class="position-relative">
+                        <div style="height: 220px; overflow: hidden;">
+                            <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}"
+                                style="object-fit: cover; height: 100%; width: 100%; transition: transform 0.3s ease;"
+                                onerror="this.src='https://via.placeholder.com/300x200?text={{ product.name }}'"
+                                onmouseover="this.style.transform='scale(1.05)'" 
+                                onmouseout="this.style.transform='scale(1)'">
+                        </div>
+                        <div class="position-absolute top-0 end-0 p-2">
+                            <span class="badge bg-success rounded-pill px-3 py-2">Unggulan</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Card body with improved styling -->
+                    <div class="card-body d-flex flex-column p-4">
+                        <h5 class="card-title fw-bold">{{ product.name }}</h5>
+                        <p class="card-text price text-danger fw-bold mb-3">Rp {{ product.price }}</p>
+                        <div class="mt-auto">
+                            <a href="{% url 'product_detail' product.slug %}" class="btn btn-outline-dark w-100 rounded-pill">Lihat Detail</a>
+                        </div>
                     </div>
                 </div>
             </div>
             {% empty %}
             <div class="col-12 text-center">
-                <p>No featured products available.</p>
+                <p>Tidak ada produk unggulan yang tersedia.</p>
             </div>
             {% endfor %}
+        </div>
+        <div class="text-center mt-5">
+            <a href="{% url 'product_list' %}" class="btn btn-dark btn-lg rounded-pill px-4 py-2">Lihat Menu Lengkap</a>
         </div>
     </div>
 </section>
 
-<!-- About Section -->
+<!-- Tentang Kami -->
 <section class="py-5 bg-light">
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-6">
-                <img src="{% static 'images/about-martabak.jpg' %}" alt="About Martabak" class="img-fluid rounded" onerror="this.src='https://via.placeholder.com/600x400?text=About+Martabak'">
+                <img src="{% static 'images/about-martabak.jpg' %}" alt="Tentang Martabak" class="img-fluid rounded"
+                    onerror="this.src='https://via.placeholder.com/600x400?text=Tentang+Martabak'">
             </div>
             <div class="col-lg-6">
-                <h2 class="mb-4">Our Story</h2>
-                <p class="mb-4">We started our martabak journey with a simple goal: to create the most delicious martabak in town. Using traditional recipes passed down through generations, we've perfected our craft to bring you authentic flavors.</p>
-                <p>Our menu features three signature martabak varieties:</p>
+                <h2 class="mb-4">Martabak Pandan Wangi</h2>
+                <p class="mb-4">Kami memulai perjalanan martabak kami dengan tujuan sederhana: membuat martabak paling
+                    lezat di kota. Dengan menggunakan resep tradisional yang diwariskan dari generasi ke generasi, kami
+                    telah menyempurnakan keahlian kami untuk menghadirkan cita rasa otentik kepada Anda.</p>
+                <p>Menu kami menampilkan tiga varian martabak khas:</p>
                 <ul>
-                    <li><strong>Martabak Telur</strong> - Savory egg martabak with minced meat and spices</li>
-                    <li><strong>Martabak Manis</strong> - Sweet martabak with various toppings</li>
-                    <li><strong>Martabak Tipis Kering</strong> - Thin and crispy martabak</li>
+                    <li><strong>Martabak Telur</strong> - Martabak telur gurih dengan rendang daging ayam dan sapi yang penuh rempah-rempah
+                    </li>
+                    <li><strong>Martabak Manis</strong> - Martabak manis dengan berbagai topping</li>
+                    <li><strong>Martabak Tipis Kering</strong> - Martabak tipis dan renyah</li>
                 </ul>
-                <a href="{% url 'about' %}" class="btn btn-dark mt-3">Learn More</a>
+                <a href="{% url 'about' %}" class="btn btn-dark mt-3">Lihat Lebih Lanjut</a>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Testimonials -->
+<!-- Testimoni -->
 <section class="py-5">
     <div class="container">
-        <h2 class="text-center mb-5">What Our Customers Say</h2>
-        <div class="row">
-            <div class="col-md-4 mb-4">
-                <div class="card border-0 shadow-sm h-100">
-                    <div class="card-body">
-                        <div class="mb-3">
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
+        <h2 class="heading">Pandan Wangi Menurut Pelanggan</h2>
+        
+        <div class="testimonial-container">
+            <div class="testimonial-track" id="testimonialTrack">
+                <!-- Testimonials will be added here dynamically -->
+            </div>
+        </div>
+        
+        <div class="nav-buttons">
+            <button class="nav-button" id="prevBtn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"/>
+                  </svg>
+            </button>
+            <button class="nav-button" id="nextBtn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"/>
+                  </svg>
+            </button>
+        </div>
+    </div>
+</section>
+
+
+<!-- Outlet Section -->
+<section id="outlet" class="py-5">
+    <div class="container text-white">
+        <div class="row mb-3">
+            <div class="col-md-12">
+                <div class="card custom-card bg-black p-4">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <img src="{% static 'images/soslow.png' %}" alt="Sosis Solo"
+                                class="img-fluid rounded-start">
                         </div>
-                        <p class="card-text">"The best martabak telur I've ever tasted! The filling is generous and the flavors are perfectly balanced."</p>
-                        <p class="card-text"><small class="text-muted">- Budi S.</small></p>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h1 class="card-title">Sosis Solo: Makanan 'Terlarang' yang Harus Kamu Cicip!</h1>
+                                <p class="card-text">Dibalik namanya yang sederhana, tersimpan resep turun-temurun dari
+                                    tanah Jawa. Rasa yang bertahan puluhan tahun, tapi jarang yang tahu ceritanya.
+                                    Disebut terlarang karena bisa membuat para penikmatnya ketagihan!</p>
+                                <a href="{% url 'product_list' %}" class="btn btn-outline-light fw-bold">Kunjungi Blog
+                                    Kami Disini</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 mb-4">
-                <div class="card border-0 shadow-sm h-100">
-                    <div class="card-body">
-                        <div class="mb-3">
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
+        </div>
+        <div class="row mt-5" id="ecomerce">
+            <div class="col-md-12 text-center">
+                <p class="fw-bold" style="color: gray; font-family: sans-serif; font-size: large;">Kami juga hadir di platform ini</p>
+                <div class="row align-items-start">
+                    <div class="col-md-4 text-center">
+                        <div style="height: 140px; display: flex; align-items: center; justify-content: center;">
+                            <img src="https://menukuliner.net/t/mnkl/a/gofood.webp" alt="Order Melalui GoFood"
+                                title="Order Melalui GoFood" width="140" loading="lazy" class="img-fluid">
                         </div>
-                        <p class="card-text">"Martabak Manis with chocolate and cheese is my favorite! Always fresh and delicious. Fast delivery too!"</p>
-                        <p class="card-text"><small class="text-muted">- Siti R.</small></p>
+                        <p style="height: 60px; display: flex; align-items: center; justify-content: center;">Pesan melalui GoFood dan nikmati banyak promo melalui aplikasi.</p>
+                        <a href="https://gofood.link/u/wkGe" target="_blank" rel="nofollow" class="btn btn-outline-dark">Order Now <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
-                </div>
-            </div>
-            <div class="col-md-4 mb-4">
-                <div class="card border-0 shadow-sm h-100">
-                    <div class="card-body">
-                        <div class="mb-3">
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
+                    <div class="col-md-4 text-center">
+                        <div style="height: 140px; display: flex; align-items: center; justify-content: center;">
+                            <img src="https://menukuliner.net/t/mnkl/a/grabfood.webp" alt="Order  Melalui GrabFood"
+                                title="Order  Melalui GrabFood" width="140" loading="lazy" class="img-fluid">
                         </div>
-                        <p class="card-text">"Martabak Tipis Kering is so crispy and flavorful! Perfect for sharing with friends during movie night."</p>
-                        <p class="card-text"><small class="text-muted">- Dewi A.</small></p>
+                        <p style="height: 60px; display: flex; align-items: center; justify-content: center;">Pesan melalui GrabFood dan dapatkan promo terbaru setiap hari.</p>
+                        <a href="https://invol.co/clbgijt" target="_blank" rel="nofollow" class="btn btn btn-outline-dark">Order Now <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <div style="height: 140px; display: flex; align-items: center; justify-content: center;">
+                            <img src="https://menukuliner.net/t/mnkl/a/shopeefood.webp" alt="Order Melalui ShopeeFood"
+                                title="Order Melalui ShopeeFood" width="140" loading="lazy" class="img-fluid">
+                        </div>
+                        <p style="height: 60px; display: flex; align-items: center; justify-content: center;">Nikmati banyak promo menarik dengan memesan melalui ShopeeFood.</p>
+                        <a href="https://ir3.xyz/64ffb24048744" target="_blank" rel="nofollow" class="btn btn btn-outline-dark">Order Now <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+
+<!-- Kontak Kami -->
+<div class="container my-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <h1 class="mb-4 text-center">Kontak Kami</h1>
+            <div class="card border-0 shadow-sm mb-5">
+                <div class="card-body p-5">
+                    <div class="row">
+                        <div class="col-md-6 mb-4 mb-md-0">
+                            <h3 class="mb-4">Hubungi Kami</h3>
+                            <p>Kami senang mendengar dari Anda! Apakah Anda memiliki pertanyaan tentang produk kami, ingin memesan dalam jumlah besar, atau memiliki umpan balik untuk dibagikan, silakan tidak ragu untuk menghubungi kami.</p>
+                            
+                            <div class="mt-4">
+                                <h5>Informasi Kontak</h5>
+                                <p><strong>Alamat:</strong><br>Jalan Martabak 123<br>Jakarta, Indonesia</p>
+                                <p><strong>WhatsApp: <a target="_top" href="https://wa.me/08567067545">08567067545</a></strong></p><a target="_blank">08567067545</a>
+                            
+                                <p><strong>Jam Operasional:</strong><br>Senin - Minggu: 10:00 AM - 10:00 PM</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h3 class="mb-4">Kirim Pesan</h3>
+                            <form method="post">
+                                {% csrf_token %}
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">Nama Anda</label>
+                                    <input type="text" class="form-control" id="name" name="name" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Alamat Email</label>
+                                    <input type="email" class="form-control" id="email" name="email" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="subject" class="form-label">Subjek</label>
+                                    <input type="text" class="form-control" id="subject" name="subject" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="message" class="form-label">Pesan</label>
+                                    <textarea class="form-control" id="message" name="message" rows="5" required></textarea>
+                                </div>
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-dark">Kirim Pesan</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-5">
+                    <h3 class="mb-4 text-center">Temukan Kami</h3>
+                    <div class="ratio ratio-16x9">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3965.1692460347354!2d106.7703188747519!3d-6.372138693618053!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69eed826253b39%3A0x21fdd948a4e5fa28!2sMartabak%20Pandan%20Wangi!5e0!3m2!1sen!2sus!4v1744301052361!5m2!1sen!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
+
+{% block extra_js %}
+<script>
+    $(document).ready(function() {
+    // Data carousel dalam format JSON
+    const carouselData = [
+        {
+            id: "mix",
+            title: "Martabak Pandan Wangi",
+            description: "Martabak yang cocok disantap dengan teman atau sahabat anda. Tempat makan ini menawarkan berbagai menu masakan yang enak dan lezat. Harganya pun masih bisa dijangkau oleh kantong anda.",
+            imageUrl: "{% static 'images/about-martabak.jpg' %}",
+            imageAlt: "Martabak Mix",
+            buttons: [
+                {
+                    text: "Pesan Paket",
+                    url: "#pesan-mix",
+                    class: "btn-outline-light"
+                },
+                {
+                    text: "Lihat Promo",
+                    url: "#detail-mix",
+                    class: "btn-light"
+                }
+            ]
+        },
+        {
+            id: "manis",
+            title: "Martabak Manis Premium",
+            description: "Nikmati kelezatan martabak manis dengan berbagai topping premium seperti coklat, keju, kacang, dan susu. Dibuat dengan resep rahasia turun temurun sejak 1990. Tekstur lembut di dalam dan renyah di luar menjadikannya favorit semua kalangan.",
+            imageUrl: "{% static 'images/martabak-manis-caro.png' %}",
+            imageAlt: "Martabak Manis",
+            buttons: [
+                {
+                    text: "Pesan Sekarang",
+                    url: "#pesan-manis",
+                    class: "btn-outline-light"
+                },
+                {
+                    text: "Lihat Detail",
+                    url: "#detail-manis",
+                    class: "btn-light"
+                }
+            ]
+        },
+        {
+            id: "telur",
+            title: "Martabak Telur Spesial",
+            description: "Martabak telur gurih dengan isian daging cincang pilihan, telur, dan rempah-rempah berkualitas. Disajikan dengan kuah kari khas yang menggugah selera. Dibuat oleh chef berpengalaman dengan teknik memasak tradisional.",
+            imageUrl: "{% static 'images/martabak-caro-png.png' %}",
+            imageAlt: "Martabak Telur",
+            buttons: [
+                {
+                    text: "Pesan Sekarang",
+                    url: "#pesan-telur",
+                    class: "btn-outline-light"
+                },
+                {
+                    text: "Lihat Detail",
+                    url: "#detail-telur",
+                    class: "btn-light"
+                }
+            ]
+        }
+    ];
+    
+    // Fungsi untuk menghasilkan HTML indikator
+    function generateIndicators() {
+        let indicatorsHTML = '';
+        
+        carouselData.forEach((item, index) => {
+            const isActive = index === 0 ? 'class="active" aria-current="true"' : '';
+            indicatorsHTML += `
+                <button type="button" data-bs-target="#martabakCarousel" data-bs-slide-to="${index}" ${isActive} aria-label="Slide ${index + 1}"></button>
+            `;
+        });
+        
+        $('#martabak-carousel-indicators').html(indicatorsHTML);
+    }
+    
+    // Fungsi untuk menghasilkan HTML item carousel
+    function generateCarouselItems() {
+        let itemsHTML = '';
+        
+        carouselData.forEach((item, index) => {
+            const isActive = index === 0 ? 'active' : '';
+            
+            // Buat HTML tombol
+            let buttonsHTML = '';
+            item.buttons.forEach(button => {
+                buttonsHTML += `<a href="${button.url}" class="btn ${button.class}">${button.text}</a>`;
+            });
+            
+            // Buat item carousel dengan gambar sebagai background
+            itemsHTML += `
+                <div class="carousel-item martabak-carousel-item ${isActive}" style="background-image: url('${item.imageUrl}'); background-size: cover; background-position: center;">
+                    <div class="martabak-carousel-overlay">
+                        <div class="martabak-text-container">
+                            <h1>${item.title}</h1>
+                            <p>${item.description}</p>
+                            <div class="martabak-btn-container">
+                                ${buttonsHTML}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+        
+        $('#martabak-carousel-inner').html(itemsHTML);
+    }
+    
+    // Jalankan fungsi-fungsi
+    
+    generateCarouselItems();
+    generateIndicators();
+    // Inisialisasi carousel
+    var myCarousel = new bootstrap.Carousel(document.getElementById('martabakCarousel'), {
+        interval: 5000,
+        pause: 'hover',
+        wrap: true
+    });
+    
+    // Fungsi untuk memastikan tinggi teks sesuai
+    function adjustTextContainer() {
+        var carouselHeight = $('#martabakCarousel').height();
+        $('.martabak-carousel-overlay').height(carouselHeight);
+    }
+    
+    // Jalankan fungsi saat halaman dimuat dan resize
+    adjustTextContainer();
+    $(window).resize(function() {
+        adjustTextContainer();
+    });
+    
+    // Tambahkan event listener untuk debugging jika diperlukan
+    $('#martabakCarousel').on('slide.bs.carousel', function (e) {
+        console.log('Slide berubah ke: ' + e.to);
+    });
+});
+</script>
+<script src="{% static 'js/testimonial.js' %}"></script>
+{% endblock %}
+

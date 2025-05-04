@@ -185,7 +185,7 @@ $(document).ready(function() {
                 // Update cart summary
                 $('#cart-summary').removeClass('d-none');
                 $('#cart-subtotal').text(`Rp ${subtotal}`);
-                $('#cart-total').text(`Rp ${subtotal + 10000}`); // Adding shipping cost
+                $('#cart-total').text(`Rp ${subtotal}`);
                 
                 // Reinitialize event handlers for new elements
                 $('.cart-quantity-input').on('change', function() {
@@ -295,7 +295,7 @@ $(document).ready(function() {
             
             $('#checkout-items-container').html(checkoutHtml);
             $('#checkout-subtotal').text(`Rp ${subtotal}`);
-            $('#checkout-total').text(`Rp ${subtotal + 10000}`); // Adding shipping cost
+            $('#checkout-total').text(`Rp ${subtotal}`);
             
             // Add order items to hidden form field
             $('#order-items').val(JSON.stringify(cart));

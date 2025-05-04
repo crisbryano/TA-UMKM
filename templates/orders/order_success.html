@@ -1,6 +1,6 @@
 {% extends 'core/base.html' %}
 
-{% block title %}Order Success - Martabak MSME{% endblock %}
+{% block title %}Pesanan Berhasil - Martabak Pandan Wangi{% endblock %}
 
 {% block content %}
 <div class="container my-5">
@@ -14,26 +14,26 @@
                             <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
                         </svg>
                     </div>
-                    <h1 class="mb-3">Thank You for Your Order!</h1>
-                    <p class="mb-4">Your order has been placed successfully. We'll start processing it right away.</p>
+                    <h1 class="mb-3">Terima Kasih Atas Pesanan Anda!</h1>
+                    <p class="mb-4">Pesanan Anda telah berhasil ditempatkan. Kami akan segera memprosesnya.</p>
                     
                     <div class="alert alert-light mb-4">
-                        <h5>Order #{{ order.id }}</h5>
-                        <p class="mb-0">Date: {{ order.created_at|date:"F d, Y" }}</p>
+                        <h5>Pesanan #{{ order.id }}</h5>
+                        <p class="mb-0">Tanggal: {{ order.created_at|date:"d F, Y" }}</p>
                     </div>
                     
                     <div class="card mb-4">
                         <div class="card-header bg-light">
-                            <h5 class="mb-0">Order Details</h5>
+                            <h5 class="mb-0">Detail Pesanan</h5>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-borderless">
                                     <thead>
                                         <tr>
-                                            <th>Product</th>
-                                            <th>Quantity</th>
-                                            <th>Price</th>
+                                            <th>Produk</th>
+                                            <th>Jumlah</th>
+                                            <th>Harga</th>
                                             <th>Total</th>
                                         </tr>
                                     </thead>
@@ -53,12 +53,8 @@
                                             <td>Rp {{ order.total_amount|floatformat:2 }}</td>
                                         </tr>
                                         <tr>
-                                            <td colspan="3" class="text-end fw-bold">Shipping:</td>
-                                            <td>Rp 10000.00</td>
-                                        </tr>
-                                        <tr>
                                             <td colspan="3" class="text-end fw-bold">Total:</td>
-                                            <td class="fw-bold">Rp {{ order.total_amount|add:10000|floatformat:2 }}</td>
+                                            <td class="fw-bold">Rp {{ order.total_amount|floatformat:2 }}</td>
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -68,19 +64,19 @@
                     
                     <div class="card mb-4">
                         <div class="card-header bg-light">
-                            <h5 class="mb-0">Shipping Information</h5>
+                            <h5 class="mb-0">Informasi Pelanggan</h5>
                         </div>
                         <div class="card-body text-start">
-                            <p><strong>Name:</strong> {{ order.full_name }}</p>
+                            <p><strong>Nama:</strong> {{ order.full_name }}</p>
                             <p><strong>Email:</strong> {{ order.email }}</p>
-                            <p><strong>Phone:</strong> {{ order.phone }}</p>
-                            <p class="mb-0"><strong>Address:</strong> {{ order.address }}</p>
+                            <p><strong>Nomor Telepon:</strong> {{ order.phone }}</p>
+                            <p class="mb-0"><strong>Catatan Untuk Penjual:</strong> {{ order.address }}</p>
                         </div>
                     </div>
                     
                     <div class="d-grid gap-2">
-                        <a href="{% url 'track_order' order.id %}" class="btn btn-dark">Track Your Order</a>
-                        <a href="{% url 'product_list' %}" class="btn btn-outline-dark">Continue Shopping</a>
+                        <a href="{% url 'track_order' order.id %}" class="btn btn-dark">Lacak Pesanan Anda</a>
+                        <a href="{% url 'product_list' %}" class="btn btn-outline-dark">Lanjutkan Belanja</a>
                     </div>
                 </div>
             </div>
@@ -97,3 +93,4 @@
 </script>
 {% endblock %}
 {% endblock %}
+

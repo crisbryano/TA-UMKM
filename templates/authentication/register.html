@@ -13,9 +13,7 @@
                     <form method="post">
                         {% csrf_token %}
                         {{ form|crispy }}
-                        <div class="d-grid gap-2 mt-4">
-                            <button type="submit" class="btn btn-dark">Register</button>
-                        </div>
+                        <button type="submit" class="btn btn-dark w-100 mt-4">Register</button>
                     </form>
                     <div class="text-center mt-3">
                         <p>Already have an account? <a href="{% url 'login' %}" class="text-dark">Login</a></p>
@@ -25,4 +23,29 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+<!-- Tambahkan kode JavaScript di sini -->
+{% block extra_js %}
+<script>
+$(document).ready(function() {
+    // Fungsi untuk menambahkan toggle password
+    function addPasswordToggle(fieldId) {
+        var toggle = $('<input>', { type: 'checkbox', id: `toggle${fieldId}`, class: 'form-check-input ms-2' });
+        var label = $('<label>', { 'for': `toggle${fieldId}`, text: 'Tampilkan Password', class: 'form-check-label ms-2' });
+
+        // Sisipkan setelah field password
+        $(`#${fieldId}`).parent().append($('<div>').addClass('mt-2').append(toggle, label));
+
+        // Toggle visibility
+        toggle.change(function() {
+            $(`#${fieldId}`).attr('type', this.checked ? 'text' : 'password');
+        });
+    }
+
+    // Target field password utama dan konfirmasi password
+    addPasswordToggle('id_password1');
+    addPasswordToggle('id_password2');
+});
+</script>
 {% endblock %}

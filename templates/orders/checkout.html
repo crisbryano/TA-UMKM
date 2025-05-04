@@ -1,7 +1,8 @@
 {% extends 'core/base.html' %}
 {% load crispy_forms_tags %}
+{% load static %}
 
-{% block title %}Checkout - Martabak MSME{% endblock %}
+{% block title %}Checkout - Martabak Pandan Wangi{% endblock %}
 
 {% block content %}
 <div class="container my-5">
@@ -11,13 +12,13 @@
         <div class="col-lg-8">
             <div class="card border-0 shadow-sm mb-4">
                 <div class="card-body p-4">
-                    <h5 class="card-title mb-4">Shipping Information</h5>
+                    <h5 class="card-title mb-4">Konfirmasi Pembelian</h5>
                     <form method="post" action="{% url 'place_order' %}" id="checkout-form">
                         {% csrf_token %}
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label for="full_name" class="form-label">Full Name</label>
-                                <input type="text" class="form-control" id="full_name" name="full_name" required>
+                                <label for="full_name" class="form-label">Nama Pembeli</label>
+                                <input type="text" class="form-control" id="full_name" name="full_name" required placeholder="Nama yang tertera di bank / pembayaran">
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="email" class="form-label">Email</label>
@@ -25,41 +26,36 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label for="phone" class="form-label">Phone Number</label>
+                            <label for="phone" class="form-label">Nomor Telepon</label>
                             <input type="tel" class="form-control" id="phone" name="phone" required>
                         </div>
                         <div class="mb-3">
-                            <label for="address" class="form-label">Address</label>
-                            <textarea class="form-control" id="address" name="address" rows="3" required></textarea>
+                            <label for="address" class="form-label">Catatan</label>
+                            <textarea class="form-control" id="address" name="address" rows="3" required placeholder="Catatan untuk penjual : Mesisnya jangan terlalu banyak / Sayurannya bisa dilebihkan"></textarea>
                         </div>
                         
                         <h5 class="card-title mb-4 mt-5">Payment Method</h5>
                         <div class="mb-3">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="payment_method" id="payment_cash" value="cash" checked>
-                                <label class="form-check-label" for="payment_cash">
-                                    Cash on Delivery
-                                </label>
-                            </div>
-                            <div class="form-check">
                                 <input class="form-check-input" type="radio" name="payment_method" id="payment_transfer" value="transfer">
                                 <label class="form-check-label" for="payment_transfer">
-                                    Bank Transfer
+                                    QRIS
                                 </label>
                             </div>
                         </div>
                         
                         <div id="bank_details" class="mb-3 d-none">
                             <div class="alert alert-info">
-                                <p class="mb-1"><strong>Bank: </strong> Bank Central Asia (BCA)</p>
-                                <p class="mb-1"><strong>Account Number: </strong> 1234567890</p>
-                                <p class="mb-1"><strong>Account Name: </strong> Martabak MSME</p>
-                                <p class="mb-0">Please transfer the exact amount and include your order number in the transfer description.</p>
+                                <img src="{% static 'images/qris.png' %}" alt="">
+                                <p class="mb-1"><strong>Nomor Rekening: </strong> 081388942564</p>
+                                <p class="mb-1"><strong>Nama Pemilik Rekening: </strong> Martabak Pandan Wangi</p>
+                                <p class="mb-0">Mohon transfer dengan nominal yang tepat dan sertakan nomor pesanan di deskripsi transfer.</p>
+                                <p> Admin akan memproses pesanan Anda secepatnya. Pastikan Anda Sudah Transfer</p>
                             </div>
                         </div>
                         
                         <div class="d-grid gap-2 mt-4">
-                            <button type="submit" class="btn btn-dark btn-lg">Place Order</button>
+                            <button type="submit" class="btn btn-dark btn-lg">Buat Pesanan</button>
                         </div>
                     </form>
                 </div>
@@ -69,18 +65,14 @@
         <div class="col-lg-4">
             <div class="card border-0 shadow-sm mb-4">
                 <div class="card-body p-4">
-                    <h5 class="card-title mb-3">Order Summary</h5>
+                    <h5 class="card-title mb-3">Ringkasan Pesanan</h5>
                     <div id="checkout-items">
-                        <!-- Order items will be loaded here via JavaScript -->
+                        <!-- Item pesanan akan di load disini via JavaScript -->
                     </div>
                     <hr>
                     <div class="d-flex justify-content-between mb-2">
                         <span>Subtotal:</span>
                         <span id="checkout-subtotal">Rp 0</span>
-                    </div>
-                    <div class="d-flex justify-content-between mb-2">
-                        <span>Shipping:</span>
-                        <span>Rp 10000</span>
                     </div>
                     <hr>
                     <div class="d-flex justify-content-between mb-3">
@@ -191,8 +183,7 @@
         // Function to update order totals
         function updateOrderTotals() {
             const subtotal = parseFloat(window.getCartTotal());
-            const shipping = 10000;
-            const total = subtotal + shipping;
+            const total = subtotal;
             
             $('#checkout-subtotal').text(`Rp ${subtotal}`);
             $('#checkout-total').text(`Rp ${total}`);

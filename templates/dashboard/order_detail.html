@@ -98,12 +98,8 @@
                                             <td>Rp {{ order.total_amount|floatformat:2 }}</td>
                                         </tr>
                                         <tr>
-                                            <td colspan="3" class="text-end fw-bold">Shipping:</td>
-                                            <td>Rp 10000.00</td>
-                                        </tr>
-                                        <tr>
                                             <td colspan="3" class="text-end fw-bold">Total:</td>
-                                            <td class="fw-bold">Rp {{ order.total_amount|add:10000|floatformat:2 }}</td>
+                                            <td class="fw-bold">Rp {{ order.total_amount|floatformat:2 }}</td>
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -116,13 +112,13 @@
                     <!-- Customer Information -->
                     <div class="card border-0 shadow-sm mb-4">
                         <div class="card-header bg-white">
-                            <h5 class="mb-0">Customer Information</h5>
+                            <h5 class="mb-0">Infomasi Pelanggan</h5>
                         </div>
                         <div class="card-body">
-                            <p><strong>Name:</strong> {{ order.full_name }}</p>
+                            <p><strong>Nama:</strong> {{ order.full_name }}</p>
                             <p><strong>Email:</strong> {{ order.email }}</p>
-                            <p><strong>Phone:</strong> {{ order.phone }}</p>
-                            <p class="mb-0"><strong>Address:</strong> {{ order.address }}</p>
+                            <p><strong>No telp:</strong> {{ order.phone }}</p>
+                            <p class="mb-0"><strong>Catatan:</strong> {{ order.address }}</p>
                         </div>
                     </div>
                     

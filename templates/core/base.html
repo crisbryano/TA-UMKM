@@ -1,44 +1,50 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Martabak MSME{% endblock %}</title>
+    <title>{% block title %}Martabak Pandan Wangi{% endblock %}</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- fontawesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/carousel.css' %}">
+    <link rel="stylesheet" href="{% static 'css/testimonial.css' %}">
     {% block extra_css %}{% endblock %}
 </head>
 <body>
-    <!-- Navigation -->
+    <!-- Navigasi -->
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="{% url 'home' %}">MARTABAK</a>
+            <a class="navbar-brand fw-bold d-flex align-items-center" href="{% url 'home' %}">
+                <img style="height: 35px; width: auto;" src="{% static 'images/logo.png' %}" alt="Logo">
+            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'home' %}">Home</a>
+                        <a class="nav-link" href="{% url 'home' %}">Beranda</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'product_list' %}">Products</a>
+                        <a class="nav-link" href="{% url 'product_list' %}">Produk</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'about' %}">About</a>
+                        <a class="nav-link" href="{% url 'about' %}">Tentang</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+                        <a class="nav-link" href="{% url 'contact' %}">Kontak</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'cart' %}">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
-                                <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                                <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H3a.5.5 0 0 1-.485-.379L1.61 3.607 1.11 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
                             </svg>
                             <span id="cart-count" class="badge bg-dark rounded-pill">0</span>
                         </a>
@@ -46,11 +52,11 @@
                     {% if user.is_authenticated %}
                         {% if user.profile.is_seller %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
+                            <a class="nav-link" href="{% url 'dashboard' %}">Dasbor</a>
                         </li>
                         {% else %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'my_orders' %}">My Orders</a>
+                            <a class="nav-link" href="{% url 'my_orders' %}">Pesanan Saya</a>
                         </li>
                         {% endif %}
                         <li class="nav-item dropdown">
@@ -66,7 +72,7 @@
                             <a class="nav-link" href="{% url 'login' %}">Login</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'register' %}">Register</a>
+                            <a class="nav-link" href="{% url 'register' %}">Daftar</a>
                         </li>
                     {% endif %}
                 </ul>
@@ -80,37 +86,82 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-dark text-white py-4 mt-5">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <h5 class="mb-3">MARTABAK</h5>
-                    <p>Delicious martabak made with the finest ingredients.</p>
-                </div>
-                <div class="col-md-4">
-                    <h5 class="mb-3">Quick Links</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="{% url 'home' %}" class="text-white">Home</a></li>
-                        <li><a href="{% url 'product_list' %}" class="text-white">Products</a></li>
-                        <li><a href="{% url 'about' %}" class="text-white">About</a></li>
-                        <li><a href="{% url 'contact' %}" class="text-white">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <h5 class="mb-3">Contact Us</h5>
-                    <address>
-                        <p>123 Martabak Street<br>Jakarta, Indonesia</p>
-                        <p>Email: info@martabak-msme.com<br>Phone: +62 123 456 7890</p>
-                    </address>
-                </div>
+<footer class="bg-dark text-white py-5">
+    <div class="container">
+        <!-- Main Footer Content -->
+        <div class="row mb-4">
+            <!-- Company Info -->
+            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                <h5 class="mb-3"><img src="{% static 'images/logo.png' %}" style="height: 150px; width: auto;" alt="" srcset=""></h5>
+                <p>Delicious martabak made with the finest ingredients.</p>
             </div>
-            <div class="row mt-3">
-                <div class="col-12 text-center">
-                    <p class="mb-0">&copy; {% now "Y" %} Martabak MSME. All rights reserved.</p>
+            
+            <!-- Quick Links -->
+            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                <h5 class="mb-3">Quick Links</h5>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><a href="{% url 'home' %}" class="text-white">Beranda</a></li>
+                    <li class="mb-2"><a href="{% url 'product_list' %}" class="text-white">Produk</a></li>
+                    <li class="mb-2"><a href="{% url 'about' %}" class="text-white">Tentang</a></li>
+                    <li class="mb-2"><a href="{% url 'contact' %}" class="text-white">Kontak</a></li>
+                </ul>
+            </div>
+            
+            <!-- Opening Hours -->
+            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                <h5 class="mb-3">Jam Buka</h5>
+                <ul class="list-unstyled">
+                    <li class="mb-2">Senin - Jumat: 10:00 - 21:00</li>
+                    <li class="mb-2">Sabtu - Minggu: 09:00 - 22:00</li>
+                    <li class="mb-2">Hari Libur: 10:00 - 21:00</li>
+                </ul>
+            </div>
+
+            <!-- Payment Methods -->
+            <div class="col-lg-3 col-md-6">
+                <h5 class="mb-3">Kami Terima</h5>
+                <div class="d-flex flex-wrap gap-2">
+                    <div class="p-2 bg-white rounded" style="width:65px; height:38px; display:flex; align-items:center; justify-content:center;">
+                        <span class="fw-bold text-dark">QRIS</span>
+                    </div>
+                    <div class="p-2 bg-white rounded" style="width:65px; height:38px; display:flex; align-items:center; justify-content:center;">
+                        <span class="fw-bold text-dark">DANA</span>
+                    </div>
+                    <div class="p-2 bg-white rounded" style="width:65px; height:38px; display:flex; align-items:center; justify-content:center;">
+                        <span class="fw-bold text-dark">OVO</span>
+                    </div>
+                    <div class="p-2 bg-white rounded" style="width:65px; height:38px; display:flex; align-items:center; justify-content:center;">
+                        <span class="fw-bold text-dark">GoPay</span>
+                    </div>
+                    <div class="p-2 bg-white rounded" style="width:65px; height:38px; display:flex; align-items:center; justify-content:center;">
+                        <span class="fw-bold text-dark">SPay</span>
+                    </div>
+                    <div class="p-2 bg-white rounded" style="width:65px; height:38px; display:flex; align-items:center; justify-content:center;">
+                        <span class="fw-bold text-dark">Tunai</span>
+                    </div>
                 </div>
             </div>
         </div>
-    </footer>
+
+        <!-- Divider -->
+        <hr class="my-4" style="border-color: rgba(255,255,255,0.1);">
+
+        <!-- Copyright & Legal -->
+        <div class="row align-items-center">
+            <div class="col-md-6 mb-3 mb-md-0">
+                <!-- Copyright & Legal -->
+        <div class="row align-items-center">
+            <div class="col-md-6 mb-3 mb-md-0">
+                <p class="mb-0">&copy; 2025 Qiulinaire. All rights reserved.</p>
+            </div>
+            <div class="col-md-6 text-md-end">
+                <a href="#" class="text-white me-3">Privacy Policy</a>
+                <a href="#" class="text-white me-3">Terms of Service</a>
+                <a href="#" class="text-white">Sitemap</a>
+            </div>
+        </div>
+    </div>
+</footer>
 
     <!-- Bootstrap 5 JS Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
@@ -120,6 +171,8 @@
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
     <!-- Custom JS -->
     <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/carousel.js' %}"></script>
     {% block extra_js %}{% endblock %}
 </body>
 </html>
+
