@@ -1,11 +1,7 @@
 # Contoh isi minimal .gitignore untuk proyek Django
-*.sqlite3
+*db.sqlite3
 __pycache__
 migrations/
-.venv/
-.env
-.env.*
-!.env.example
 media/
 staticfiles/
 .vscode/
